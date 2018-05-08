@@ -14,3 +14,4 @@ for (let level in levels) {
 }
 
 logger.error(new Error('heap out'))
+logger.error('load db failed', {error: new Error('heap out')})

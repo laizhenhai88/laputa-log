@@ -44,6 +44,7 @@ for (let level in levels) {
 }
 
 logger.error(new Error('heap out'))
+logger.error('load db failed', {error: new Error('heap out')})
 ```
 
 ### 默认配置
@@ -100,10 +101,14 @@ const path = require('path')
 
 const pid = process.pid
 const pname = path.basename(process.cwd())
+const os = require('os')
 
 const errorFormat = format((info, opts) => {
   if (info instanceof Error) {
     info.message = info.stack
+  }
+  if (info.error && info.error instanceof Error) {
+    info.message += os.EOL + info.error.stack
   }
   return info
 })

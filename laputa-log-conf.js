@@ -7,10 +7,14 @@ const path = require('path')
 
 const pid = process.pid
 const pname = path.basename(process.cwd())
+const os = require('os')
 
 const errorFormat = format((info, opts) => {
   if (info instanceof Error) {
     info.message = info.stack
+  }
+  if (info.error && info.error instanceof Error) {
+    info.message += os.EOL + info.error.stack
   }
   return info
 })
